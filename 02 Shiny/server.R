@@ -10,7 +10,7 @@ shinyServer(function(input, output) {
   output$distPlot <- renderPlot({
 # Start your code here.
 
-# The following is equivalent to KPI Story 2 Sheet 2 and Parameters Story 3 in "Crosstabs, KPIs, Barchart.twb"
+# Here is the Crosstab and KPI
     
 KPI_Low_Max_value = input$KPI1     
 KPI_Medium_Max_value = input$KPI2

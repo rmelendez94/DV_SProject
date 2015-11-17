@@ -19,7 +19,7 @@ headerPanel("CrossTab!"),
                 "KPI_Medium_Max_value:", 
                 min = .1,
                 max = .15, 
-                value = .1)
+                value = .15)
   ),
 
 # Show a plot of the generated distribution
