@@ -1,0 +1,17 @@
+{
+    "contents" : "#ui.R \n\nlibrary(shiny)\n\n# Define UI for application that plots random distributions \nshinyUI(pageWithSidebar(\n\n# Application title\nheaderPanel(\"CrossTab!\"),\n\n# Sidebar with a slider input for number of observations\n  sidebarPanel(\n    sliderInput(\"KPI1\", \n                \"KPI_Low_Max_value:\", \n                min = 0,\n                max = .1, \n                value = .1),\n    sliderInput(\"KPI2\", \n                \"KPI_Medium_Max_value:\", \n                min = .1,\n                max = .15, \n                value = .1)\n  ),\n\n# Show a plot of the generated distribution\n  mainPanel(\n    plotOutput(\"distPlot\")\n  )\n))\n",
+    "created" : 1447722160757.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1696278796",
+    "id" : "F94F735F",
+    "lastKnownWriteTime" : 1447798368,
+    "path" : "~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_SProject/02 Shiny/ui.R",
+    "project_path" : "02 Shiny/ui.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

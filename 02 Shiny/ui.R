@@ -6,20 +6,20 @@ library(shiny)
 shinyUI(pageWithSidebar(
 
 # Application title
-headerPanel("Hello Shiny!"),
+headerPanel("CrossTab!"),
 
 # Sidebar with a slider input for number of observations
   sidebarPanel(
     sliderInput("KPI1", 
                 "KPI_Low_Max_value:", 
-                min = 1,
-                max = 4750, 
-                value = 4750),
+                min = 0,
+                max = .1, 
+                value = .1),
     sliderInput("KPI2", 
                 "KPI_Medium_Max_value:", 
-                min = 4750,
-                max = 5000, 
-                value = 5000)
+                min = .1,
+                max = .15, 
+                value = .1)
   ),
 
 # Show a plot of the generated distribution
