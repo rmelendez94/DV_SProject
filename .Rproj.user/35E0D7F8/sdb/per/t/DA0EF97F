@@ -1,0 +1,17 @@
+{
+    "contents" : "# server.R\nrequire(\"jsonlite\")\nrequire(\"RCurl\")\nrequire(ggplot2)\nrequire(dplyr)\nrequire(shiny)\n\nshinyServer(function(input, output) {\n\n  output$distPlot <- renderPlot({\n# Start your code here.\n\n# The following is equivalent to KPI Story 2 Sheet 2 and Parameters Story 3 in \"Crosstabs, KPIs, Barchart.twb\"\n    \nKPI_Low_Max_value = input$KPI1     \nKPI_Medium_Max_value = input$KPI2\n    \ndf <- data.frame(fromJSON(getURL(URLencode(gsub(\"\\n\", \" \", 'skipper.cs.utexas.edu:5001/rest/native/?query=\n\"select color, clarity, sum_price, round(sum_carat) as sum_carat, kpi as ratio, \ncase\nwhen kpi < \"p1\" then \\\\\\'03 Low\\\\\\'\nwhen kpi < \"p2\" then \\\\\\'02 Medium\\\\\\'\nelse \\\\\\'01 High\\\\\\'\nend kpi\nfrom (select color, clarity, \nsum(price) as sum_price, sum(carat) as sum_carat, \nsum(price) / sum(carat) as kpi\nfrom diamonds\ngroup by color, clarity)\norder by clarity;\"\n')), httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_UTEid', PASS='orcl_UTEid', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON', p1=KPI_Low_Max_value, p2=KPI_Medium_Max_value), verbose = TRUE)))\n    \n# df <- diamonds %>% group_by(color, clarity) %>% summarize(sum_price = sum(price), sum_carat = sum(carat)) %>% mutate(ratio = sum_price / sum_carat) %>% mutate(kpi = ifelse(ratio <= KPI_Low_Max_value, '03 Low', ifelse(ratio <= KPI_Medium_Max_value, '02 Medium', '01 High'))) %>% rename(COLOR=color, CLARITY=clarity, SUM_PRICE=sum_price, SUM_CARAT=sum_carat, RATIO=ratio, KPI=kpi)\n    \nplot <- ggplot() + \n      coord_cartesian() + \n      scale_x_discrete() +\n      scale_y_discrete() +\n      labs(title='Diamonds Crosstab\\nSUM_PRICE, SUM_CARAT, SUM_PRICE / SUM_CARAT') +\n      labs(x=paste(\"COLOR\"), y=paste(\"CLARITY\")) +\n      layer(data=df, \n            mapping=aes(x=COLOR, y=CLARITY, label=SUM_PRICE), \n            stat=\"identity\", \n            stat_params=list(), \n            geom=\"text\",\n            geom_params=list(colour=\"black\"), \n            position=position_identity()\n      ) +\n      layer(data=df, \n            mapping=aes(x=COLOR, y=CLARITY, fill=KPI), \n            stat=\"identity\", \n            stat_params=list(), \n            geom=\"tile\",\n            geom_params=list(alpha=0.50), \n            position=position_identity()\n      )\n\n# End your code here.\n      return(plot)\n  })\n})\n",
+    "created" : 1447722117471.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2773190805",
+    "id" : "DA0EF97F",
+    "lastKnownWriteTime" : 1447348395,
+    "path" : "~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_SProject/02 Shiny/server.R",
+    "project_path" : "02 Shiny/server.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
