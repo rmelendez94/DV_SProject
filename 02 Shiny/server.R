@@ -7,6 +7,8 @@ require(shiny)
 
 shinyServer(function(input, output) {
   
+  df <- data.frame(fromJSON(getURL(URLencode('skipper.cs.utexas.edu:5001/rest/native/?query="select * from BNKMKTG"'),httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_rm46926', PASS='orcl_rm46926', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE), ))
+  
   output$scatterPlot <- renderPlot({
     # Start your code here.
     # Here is the scatter plot
@@ -114,7 +116,7 @@ shinyServer(function(input, output) {
 KPI_Low_Max_value = input$KPI1     
 KPI_Medium_Max_value = input$KPI2
     
-df %>% group_by(JOB) %>% summarize() %>% View()
+#df %>% group_by(JOB) %>% summarize() %>% View()
 
 dfc <- df %>% mutate(Yyes = ifelse(Y == 'yes', 1, 0), Yno = ifelse(Y == 'no', 1, 0)) %>% group_by(EDUCATION) %>% mutate(Ratio = sum(Yyes)/sum(Yno)) %>% ungroup() %>% group_by(EDUCATION, Y, HOUSING) %>% summarize(AVG_DURATION = round(mean(DURATION),1), Ratio = mean(Ratio)) %>% mutate(KPI = ifelse(Ratio <= KPI_Low_Max_value, '03 Low', ifelse(Ratio <= KPI_Medium_Max_value, '02 Medium', '01 High')))
 
