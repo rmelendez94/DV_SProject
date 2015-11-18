@@ -10,9 +10,14 @@ shinyServer(function(input, output) {
   output$scatterPlot <- renderPlot({
     # Start your code here.
     # Here is the scatter plot
-    dfs <- df %>% select(DURATION, Y, CONS_PRICE_IDX)
-    dfsY <- df %>% select(DURATION, Y, CONS_PRICE_IDX) %>% filter(Y=='yes')
-    dfsN <- df %>% select(DURATION, Y, CONS_PRICE_IDX) %>% filter(Y=='no')
+    if (input$OutcomeSelectionFilter == 1)
+      ofilter = 'no'
+    else if (input$OutcomeSelectionFilter == 2)
+      ofilter = 'yes'
+    else
+      ofilter = 'all'
+    
+    dfs <- df %>% select(DURATION, Y, CONS_PRICE_IDX) %>% filter(Y != ofilter)
     
     plot1 <- ggplot() + 
       coord_cartesian() + 
@@ -27,23 +32,16 @@ shinyServer(function(input, output) {
             geom="point",
             geom_params=list(alpha=.8), 
             position=position_jitter(width=0, height=0)
-      )+
-      layer(data=dfsY, 
+      ) +
+      layer(data=dfs, 
             mapping=aes(x=as.numeric(as.character(DURATION)), y=as.numeric(as.character(CONS_PRICE_IDX)), color=Y),
             stat="smooth",
             stat_params=list(method= lm, se= FALSE),
             geom="smooth",
             geom_params=list(alpha= .8), 
             position=position_jitter(width=0, height=0)
-      )+
-      layer(data=dfsN,
-            mapping=aes(x=as.numeric(as.character(DURATION)), y=as.numeric(as.character(CONS_PRICE_IDX)), color=Y),
-            stat="smooth",
-            stat_params=list(method= lm, se= FALSE),
-            geom="smooth",
-            geom_params=list(alpha= .8), 
-            position=position_jitter(width=0, height=0)
-      )
+        )
+    
     # End your code here.
     return(plot1)
   })
