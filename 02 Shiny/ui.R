@@ -11,6 +11,9 @@ headerPanel("Portuguese Bank Marketing Campaign"),
 # Sidebar with a slider input for number of observations
     sidebarPanel(
       h4("Scatterplot Input"),
+      selectInput("OutcomeSelectionFilter",
+                  "Filter Outcome:", 
+                   choices = list("Yes" = 1, "No" = 2, "All" = 3), selected = 3),
       h4("Bar Chart Input"),
       radioButtons("ReferenceLine", 
                    "Reference Lines:",

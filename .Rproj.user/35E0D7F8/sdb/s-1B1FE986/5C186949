@@ -1,12 +1,12 @@
 {
-    "contents" : "#ui.R \n\nlibrary(shiny)\n\n# Define UI for application that plots random distributions \nshinyUI(pageWithSidebar(\n\n# Application title\nheaderPanel(\"Portuguese Bank Marketing Campaign\"),\n\n# Sidebar with a slider input for number of observations\n    sidebarPanel(\n      h4(\"Scatterplot Input\"),\n      h4(\"Bar Chart Input\"),\n      radioButtons(\"ReferenceLine\", \n                   \"Reference Lines:\",\n                   choices = list(\"Average\" = 1, \"Minimum\" = 2,\n                                  \"Maximum\" = 3, \"Sum\" = 4), selected = 1),\n      h4(\"Crosstab Inputs\"),\n      sliderInput(\"KPI1\", \n                  \"KPI_Low_Max_value:\", \n                  min = 0,\n                  max = .15, \n                  value = .1),\n      sliderInput(\"KPI2\", \n                  \"KPI_Medium_Max_value:\", \n                  min = .1,\n                  max = .18, \n                  value = .15)\n    ),\n\n# Show a plot of the generated distribution\n  mainPanel(\n    tabsetPanel(\n      tabPanel(\"Scatterplot\", plotOutput(\"scatterPlot\")),\n      tabPanel(\"Bar Chart\", plotOutput(\"barPlot\")),\n      tabPanel(\"Crosstab\", plotOutput(\"crosstabPlot\"))\n    )\n  )\n))\n",
+    "contents" : "#ui.R \n\nlibrary(shiny)\n\n# Define UI for application that plots random distributions \nshinyUI(pageWithSidebar(\n\n# Application title\nheaderPanel(\"Portuguese Bank Marketing Campaign\"),\n\n# Sidebar with a slider input for number of observations\n    sidebarPanel(\n      h4(\"Scatterplot Input\"),\n      selectInput(\"OutcomeSelectionFilter\",\n                  \"Filter Outcome:\", \n                   choices = list(\"Yes\" = 1, \"No\" = 2, \"All\" = 3), selected = 3),\n      h4(\"Bar Chart Input\"),\n      radioButtons(\"ReferenceLine\", \n                   \"Reference Lines:\",\n                   choices = list(\"Average\" = 1, \"Minimum\" = 2,\n                                  \"Maximum\" = 3, \"Sum\" = 4), selected = 1),\n      h4(\"Crosstab Inputs\"),\n      sliderInput(\"KPI1\", \n                  \"KPI_Low_Max_value:\", \n                  min = 0,\n                  max = .15, \n                  value = .1),\n      sliderInput(\"KPI2\", \n                  \"KPI_Medium_Max_value:\", \n                  min = .1,\n                  max = .18, \n                  value = .15)\n    ),\n\n# Show a plot of the generated distribution\n  mainPanel(\n    tabsetPanel(\n      tabPanel(\"Scatterplot\", plotOutput(\"scatterPlot\")),\n      tabPanel(\"Bar Chart\", plotOutput(\"barPlot\")),\n      tabPanel(\"Crosstab\", plotOutput(\"crosstabPlot\"))\n    )\n  )\n))\n",
     "created" : 1447883391972.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "820937315",
+    "hash" : "1066946254",
     "id" : "5C186949",
-    "lastKnownWriteTime" : 1447883653,
+    "lastKnownWriteTime" : 1447884039,
     "path" : "~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_SProject/02 Shiny/ui.R",
     "project_path" : "02 Shiny/ui.R",
     "properties" : {
