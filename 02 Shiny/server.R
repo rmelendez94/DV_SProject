@@ -50,6 +50,58 @@ shinyServer(function(input, output) {
     # Start your code here.
     # Here is the bar chart
     
+    plottitle = "Portuguese Bank Marketing Campaign Effectiveness\nBar Chart:"
+    dfb <- df %>% group_by(POUTCOME, Y) %>% summarise(AVG_CAMPAIGN = mean(CAMPAIGN))
+    if (input$ReferenceLine == 1) {
+      # Window Avg
+      subtitle = "AVG_CAMPAIGN, WINDOW_AVG_CAMPAIGN"
+      dfb1 <- dfb %>% ungroup %>% group_by(POUTCOME) %>% summarise(measure_value = mean(AVG_CAMPAIGN))}
+    else if (input$ReferenceLine == 2) {
+      # Window Min
+      subtitle = "AVG_CAMPAIGN, WINDOW_MIN_CAMPAIGN"
+      dfb1 <- dfb %>% ungroup %>% group_by(POUTCOME) %>% summarise(measure_value = min(AVG_CAMPAIGN))}
+    else if (input$ReferenceLine == 3) {
+      # Window Max
+      subtitle = "AVG_CAMPAIGN, WINDOW_MAX_CAMPAIGN"
+      dfb1 <- dfb %>% ungroup %>% group_by(POUTCOME) %>% summarise(measure_value = max(AVG_CAMPAIGN))}
+    else {
+      # Window Sum
+      subtitle = "AVG_CAMPAIGN, WINDOW_SUM_CAMPAIGN"
+      dfb1 <- dfb %>% ungroup %>% group_by(POUTCOME) %>% summarise(measure_value = sum(AVG_CAMPAIGN))}
+    dfb <- inner_join(dfb, dfb1, by="POUTCOME")
+    
+    #spread(dfb, Y, AVG_CAMPAIGN) %>% View
+    
+    plot2 <- ggplot() + 
+      coord_cartesian() + 
+      scale_x_discrete() +
+      scale_y_continuous() +
+      facet_wrap(~POUTCOME, ncol=1) +
+      labs(title=paste(plottitle,subtitle,sep = " ")) +
+      labs(x=paste("Y (OUTCOME)"), y=paste("AVG_CAMPAIGN")) +
+      layer(data=dfb, 
+            mapping=aes(x=Y, y=AVG_CAMPAIGN, color=Y, fill=Y), 
+            stat="identity", 
+            stat_params=list(), 
+            geom="bar",
+            geom_params=list(width=.25), 
+            position=position_identity()
+      ) + coord_flip() +
+      layer(data=dfb, 
+            mapping=aes(x=Y, y=measure_value, label=round(measure_value, 4)), 
+            stat="identity", 
+            stat_params=list(), 
+            geom="text",
+            geom_params=list(colour="black", hjust=1.5, size=3.5), 
+            position=position_identity()
+      ) +
+      layer(data=dfb, 
+            mapping=aes(yintercept = measure_value), 
+            geom="hline",
+            geom_params=list(colour="red")
+      ) 
+    
+    
     # End your code here.
     return(plot2)
   })
