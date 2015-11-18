@@ -6,8 +6,24 @@ require(dplyr)
 require(shiny)
 
 shinyServer(function(input, output) {
+  
+  output$scatterPlot <- renderPlot({
+    # Start your code here.
+    # Here is the scatter plot
+    
+    # End your code here.
+    return(plot)
+  })
+  
+  output$barPlot <- renderPlot({
+    # Start your code here.
+    # Here is the bar chart
+    
+    # End your code here.
+    return(plot)
+  })
 
-  output$distPlot <- renderPlot({
+  output$crosstabPlot <- renderPlot({
 # Start your code here.
 
 # Here is the Crosstab and KPI
