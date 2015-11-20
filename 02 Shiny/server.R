@@ -1,9 +1,13 @@
 # server.R
-require("jsonlite")
-require("RCurl")
+require(jsonlite)
+require(RCurl)
 require(ggplot2)
 require(dplyr)
+require(tidyr)
 require(shiny)
+require(leaflet)
+require(shinydashboard)
+require(DT)
 
 shinyServer(function(input, output) {
   
@@ -151,5 +155,68 @@ plot3 <- ggplot() +
 
 # End your code here.
       return(plot3)
+  })
+  
+  output$blendedPlot <- renderPlot({
+    # Start your code here.
+    # Here is the blended bar chart
+    
+    plottitle = "Portuguese Bank Marketing Campaign Effectiveness\nBlending\nAVG_SALARY:"
+    dfbl <-
+      data.frame(fromJSON(getURL(
+        URLencode(
+          gsub(
+            "\n", " ", 'skipper.cs.utexas.edu:5001/rest/native/?query=
+            """select JOB_TYPE as job_name, \\\'AVERAGE_SALARY\\\' as measure_names, 
+            sum(AVERAGE_SALARY) as measure_values 
+            from JOBTYPE
+            group by JOB_TYPE
+            union all
+            select JOB as job_name, \\\'CAMPAIGN\\\' as measure_names, sum(CAMPAIGN) as measure_values from BNKMKTG
+            group by JOB;"""'
+          )
+          ), httpheader = c(
+            DB = 'jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER =
+              'C##cs329e_rm46926', PASS = 'orcl_rm46926', MODE = 'native_mode', MODEL = 'model', returnDimensions = 'False', returnFor = 'JSON'
+        ), verbose = TRUE
+      ))); #View(dfbl)
+    
+    # Rearranges measure_names into usable columns
+    ndfbl <- spread(dfbl, MEASURE_NAMES, MEASURE_VALUES) %>% arrange(desc(AVERAGE_SALARY))
+    
+    # Creates an ordered column of job type to be used for ordering in ggplot
+    ndfbl$ORDERED_JOBS <- reorder(ndfbl$JOB_NAME, ndfbl$AVERAGE_SALARY)
+    
+    plot4 <- ggplot() +
+      coord_cartesian() +
+      scale_x_discrete() +
+      scale_y_continuous(limits = c(0,100000)) +
+      scale_fill_gradient(low = "grey90", high = "darkgreen", na.value = "grey90", guide = "colourbar") +
+      labs(title = 'Portuguese Bank Marketing Campaign Effectiveness\nBlending\nAVG_SALARY') +
+      labs(x = paste("JOB TYPE"), y = paste("AVERAGE SALARY")) +
+      theme(panel.background=element_rect(fill='grey100')) +
+      layer(
+        data = ndfbl,
+        mapping = aes(x = ORDERED_JOBS, y = AVERAGE_SALARY, fill = CAMPAIGN),
+        stat = "identity",
+        stat_params = list(),
+        geom = "bar",
+        geom_params = list(width=.5),
+        position = position_identity()
+      ) +
+      layer(
+        data = ndfbl,
+        mapping = aes(
+          x = ORDERED_JOBS, y = AVERAGE_SALARY, label = round(CAMPAIGN)
+        ),
+        stat = "identity",
+        stat_params = list(),
+        geom = "text",
+        geom_params = list(colour = "black", hjust = -0.1),
+        position = position_identity()
+      ) + coord_flip() 
+    
+    # End your code here.
+    return(plot4)
   })
 })
