@@ -36,13 +36,6 @@ Our Shiny App can be found here : https://hyunjiseo.shinyapps.io/02Shiny
 
 ##Scatter Plot
 
-####RStudio
-
-```{r}
-#Shows the subset and summary of the data frame
-source("../DV_TProject1/03 R SQL Visualizations/ScatterPlot.R", echo = TRUE)
-```
-
 ####Findings:
 In this visualization we observed Consumer Price Index (CONS.PRICE.IDX), duration of the last marketing call (DURATION), and final outcome of the campiagn (Y).
 
@@ -54,13 +47,6 @@ In the Shiny application, the user is able to filter the scatterplot by outcome 
 
 ##Bar Chart and Reference Line
 
-####R Studio
-
-```{r}
-#Shows the subset and summary of the data frame
-source("../03 R SQL Visualizations/Barchart_RLine.R", echo = TRUE)
-```
-
 ####Findings:
 In this visualization we observed the number of times each person was contacted in the current cmpaign (CAMPAIGN), past campaign outcome (POUTCOME), and current campaign outcome (Y)
 
@@ -70,13 +56,6 @@ By using Shiny, the user is able to view various values calculated by the data. 
 ***
 
 ##Cross Tab and KPI
-
-####R Studio
-
-```{r}
-#Shows the subset and summary of the data frame
-source("../03 R SQL Visualizations/Crosstab_KPI.R", echo = TRUE)
-```
 
 ####Findings:
 For this graph, we compared the average call duration across target market groups sectioned by education level (Education) and whether or not they have a housing loan (Housing). We also further catgorized the market segment groups by a key performance indicator: the ratio of campaign successes to campaign failures in those of the same education level (Calculated Success KPI). Campaign success is defined as when they accepted a term deposit (Y) offer as a result of the campaign. A 'High' rating in the KPI indicated that the ratio of successes to failures exceeded 15%. A 'Low' rating indicated the ratio of successes to failures was less than 10%. This KPI rating also helps showcase which education level group the bank had more success in persuading.
