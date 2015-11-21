@@ -32,7 +32,7 @@ This data relates to the direct marketing campaign of a Portuguese bank to have 
 
 ####Shiny App:
 
-Our Shiny App can be found here : https://hyunjiseo.shinyapps.io/02Shiny
+Our Shiny App can be found here : https://hyunjiseo.shinyapps.io/DV_SProject
 
 ##Scatter Plot
 
