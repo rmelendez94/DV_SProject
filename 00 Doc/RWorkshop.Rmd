@@ -68,13 +68,6 @@ By using Shiny, the user is able to adjust the values to define the parameters f
 
 ##Data Blending 
 
-####R Visualization
-
-```{r}
-#Shows the subset and summary of the data frame
-#source("../03 R SQL Visualizations/Blending.R", echo = TRUE)
-```
-
 ####Findings:
 For this visualization, we blended two data sets - job-type and bank-additional - and extracted the relationship between the variables JOB TYPE, CAMPAIGN, and AVERAGE SALARY. We used JOB TYPE as the common variable between the two data sets, and created a relationship in Tableau through JOB TYPE. The CAMPAIGN variable represented the number of contacts performed during the current marketing campaign for a specific client, while the AVERAGE SALARY represented the annual salary of clients, given by job types.
 
