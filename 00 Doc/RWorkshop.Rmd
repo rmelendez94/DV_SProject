@@ -1,5 +1,5 @@
 ---
-title: "DV_TProject1"
+title: "DV_SProject"
 output: html_document
 ---
 
@@ -30,58 +30,60 @@ source("../01 Data/R_Load.R", echo = TRUE)
 ####Explanation of Data:
 This data relates to the direct marketing campaign of a Portuguese bank to have people subscribe to a term deposit at their institution. The campaign had gathered data regard their campaign efforts, individuals' demographics, and external social situations at the time of the campaign. 
 
+####Shiny App:
+
+Our Shiny App can be found here : https://hyunjiseo.shinyapps.io/02Shiny
+
 ##Scatter Plot
 
-####R Visualization
+####RStudio
 
 ```{r}
 #Shows the subset and summary of the data frame
-source("../02 Shiny/ui.R", echo = TRUE)
-source("../02 Shiny/server.R", echo = TRUE)
+source("../DV_TProject1/03 R SQL Visualizations/ScatterPlot.R", echo = TRUE)
 ```
-
-####Tableau Visualization
-
-![](./ShinyCrossTab.jpg)
 
 ####Findings:
 In this visualization we observed Consumer Price Index (CONS.PRICE.IDX), duration of the last marketing call (DURATION), and final outcome of the campiagn (Y).
 
 We found that for those who said yes there seemed to be a longer call duration and higher consumer price index for the period they were contacted. We speculate this is due to the fact that when consumer price index rises so do interest rates, and that would make people less likely to subscribe to a term deposit. Therefore, in order to get a yes, a longer call was required. 
 
+In the Shiny application, the user is able to filter the scatterplot by outcome of the bank marketing. Clients responded to the marketing either by agreeing to subscribe to a term deposit (indicated by "YES") or declining to a term deposit (indicated by "NO"). The user is able to observe the relationship between Duration and Consumer Price Index of all clients or by their decision to subscribe to a term deposit.
+
+***
+
+##Bar Chart and Reference Line
+
+####R Studio
+
+```{r}
+#Shows the subset and summary of the data frame
+source("../03 R SQL Visualizations/Barchart_RLine.R", echo = TRUE)
+```
+
+####Findings:
+In this visualization we observed the number of times each person was contacted in the current cmpaign (CAMPAIGN), past campaign outcome (POUTCOME), and current campaign outcome (Y)
+
+Overall, we found that banks, on average, spent more effort on people who have not been contacted in previous campaigns. For those who have previously been a customer, banks required less contact times on average compared to the other two groups. This leaves previous non-customers who were contacted, on average, higher than previous customers, but lower than new targets. Lastly, one consistent trend was that across all groups the average effort needed to persuade those who ultimately said yes was less than those who refused. 
+
+By using Shiny, the user is able to view various values calculated by the data. There are four possible options given to the user - average, sum, minimum and maximum. The value is displayed by a reference line that is calculated within past campaign outcome - failure, nonexistent, or success.
 ***
 
 ##Cross Tab and KPI
+
+####R Studio
+
 ```{r}
 #Shows the subset and summary of the data frame
-#source("../03 R SQL Visualizations/Crosstab_KPI.R", echo = TRUE)
+source("../03 R SQL Visualizations/Crosstab_KPI.R", echo = TRUE)
 ```
-![](./ShinyCrossTab.jpg)
 
 ####Findings:
 For this graph, we compared the average call duration across target market groups sectioned by education level (Education) and whether or not they have a housing loan (Housing). We also further catgorized the market segment groups by a key performance indicator: the ratio of campaign successes to campaign failures in those of the same education level (Calculated Success KPI). Campaign success is defined as when they accepted a term deposit (Y) offer as a result of the campaign. A 'High' rating in the KPI indicated that the ratio of successes to failures exceeded 15%. A 'Low' rating indicated the ratio of successes to failures was less than 10%. This KPI rating also helps showcase which education level group the bank had more success in persuading.
 
 We found that the bank generally found higher success rates when contacting people of higher education levels. It also seems that people of higher education levels also accepted the term deposit offer in a shorter call duration. Meanwhile, the bank had more difficulty persuading the market segments of  elementary and junior high graduates. If the bank were to continue the campaign, we would suggest for them to spend more time and effort persuading those of higher education levels, as each second of a telemarketing call is more valuable in bringing these people to a decision.
 
-***
-
-##Bar Chart and Reference Line
-
-####R Visualization
-
-```{r}
-#Shows the subset and summary of the data frame
-#source("../03 R SQL Visualizations/Barchart_RLine.R", echo = TRUE)
-```
-
-####Tableau Visualization
-
-![](./ShinyCrossTab.jpg)
-
-####Findings:
-In this visualization we observed the number of times each person was contacted in the current cmpaign (CAMPAIGN), past campaign outcome (POUTCOME), and current campaign outcome (Y)
-
-Overall, we found that banks, on average, spent more effort on people who have not been contacted in previous campaigns. For those who have previously been a customer, banks required less contact times on average compared to the other two groups. This leaves previous non-customers who were contacted, on average, higher than previous customers, but lower than new targets. Lastly, one consistent trend was that across all groups the average effort needed to persuade those who ultimately said yes was less than those who refused. 
+By using Shiny, the user is able to adjust the values to define the parameters for KPI. The user is given the option to adjust the maximum values for what is defined as Low and as Medium by moving a pointer across a slider. Once the user selects a maximum value, the visualization is adjusted accordingly.
 
 ***
 
@@ -93,10 +95,6 @@ Overall, we found that banks, on average, spent more effort on people who have n
 #Shows the subset and summary of the data frame
 #source("../03 R SQL Visualizations/Blending.R", echo = TRUE)
 ```
-
-####Tableau Visualization
-
-![](./ShinyCrossTab.jpg)
 
 ####Findings:
 For this visualization, we blended two data sets - job-type and bank-additional - and extracted the relationship between the variables JOB TYPE, CAMPAIGN, and AVERAGE SALARY. We used JOB TYPE as the common variable between the two data sets, and created a relationship in Tableau through JOB TYPE. The CAMPAIGN variable represented the number of contacts performed during the current marketing campaign for a specific client, while the AVERAGE SALARY represented the annual salary of clients, given by job types.
